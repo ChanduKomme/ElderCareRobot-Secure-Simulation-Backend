@@ -1,0 +1,35 @@
+{
+  "algorithm": "sha256",
+  "pack": {
+    "alert": {
+      "id": 5,
+      "patient_id": 2,
+      "created_at": "2026-03-09T19:07:42.480600",
+      "severity": "critical",
+      "reason_codes": [
+        "fall_unresolved_2m"
+      ],
+      "evidence_event_ids": [
+        83
+      ],
+      "status": "ack"
+    },
+    "events": [
+      {
+        "id": 83,
+        "patient_id": 2,
+        "timestamp": "2026-03-08T22:31:42.429393",
+        "event_type": "fall_suspected",
+        "category": "incidents",
+        "severity": "critical",
+        "description": "A possible fall was detected by motion anomaly rules.",
+        "evidence": {
+          "sensor": "uwb-anchor-1"
+        },
+        "risk_score_after": 61.0
+      }
+    ]
+  },
+  "content_hash": "715b46b9ed92e3f3fbe42fc5126ec39fc8b9a05ebbb0883b33e77f0857acdecf",
+  "signature": "ac5983b9991833ccc6528a022809d6197c25de40a7fd577f64cbfddc87a4361e"
+}

@@ -1,0 +1,13 @@
+services:
+  api:
+    build: .
+    container_name: eldercarerobot_api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:////app/data/eldercare.db
+      - JWT_ACTIVE_KID=v1
+      - JWT_SECRET_V1=dev-insecure-change-me
+      - EVIDENCE_HMAC_KEY=dev-evidence-key-change-me
+    volumes:
+      - ./data:/app/data

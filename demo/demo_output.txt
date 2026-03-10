@@ -1,0 +1,585 @@
+
+=== create relative ===
+{
+  "body": {
+    "created_at": "2026-03-09T19:07:42.058660",
+    "id": 4,
+    "is_active": true,
+    "role": "relative",
+    "username": "relative_demo_083261"
+  },
+  "status": 201
+}
+
+=== create provider ===
+{
+  "body": {
+    "created_at": "2026-03-09T19:07:42.361830",
+    "id": 5,
+    "is_active": true,
+    "role": "provider",
+    "username": "provider_demo_083261"
+  },
+  "status": 201
+}
+
+=== create patient ===
+{
+  "body": {
+    "created_at": "2026-03-09T19:07:42.386988",
+    "external_ref": "PAT-DEMO-083261",
+    "full_name": "Eleanor Rigby",
+    "id": 2
+  },
+  "status": 201
+}
+
+=== simulate ===
+{
+  "body": {
+    "created_alert_count": 3,
+    "created_event_count": 72,
+    "event_types": [
+      "fall_suspected",
+      "hydration_prompted",
+      "medication_confirmed",
+      "medication_due",
+      "medication_missed",
+      "no_response",
+      "normal_activity",
+      "wandering_night"
+    ]
+  },
+  "status": 200
+}
+
+=== admin sees all alerts ===
+{
+  "body": [
+    {
+      "created_at": "2026-03-09T19:07:42.482051",
+      "evidence_event_ids": [
+        78,
+        79,
+        80
+      ],
+      "id": 6,
+      "patient_id": 2,
+      "reason_codes": [
+        "no_response_during_wandering",
+        "wandering_over_10m"
+      ],
+      "resolution_note": null,
+      "severity": "critical",
+      "status": "open"
+    },
+    {
+      "created_at": "2026-03-09T19:07:42.480600",
+      "evidence_event_ids": [
+        83
+      ],
+      "id": 5,
+      "patient_id": 2,
+      "reason_codes": [
+        "fall_unresolved_2m"
+      ],
+      "resolution_note": null,
+      "severity": "critical",
+      "status": "open"
+    },
+    {
+      "created_at": "2026-03-09T19:07:42.478658",
+      "evidence_event_ids": [
+        98,
+        114
+      ],
+      "id": 4,
+      "patient_id": 2,
+      "reason_codes": [
+        "medication_missed_twice_24h"
+      ],
+      "resolution_note": null,
+      "severity": "warning",
+      "status": "open"
+    }
+  ],
+  "count": 3,
+  "status": 200
+}
+
+=== relative status shows redaction ===
+{
+  "body": {
+    "adherence_summary": {
+      "medication_confirmed": 1,
+      "medication_due": 3,
+      "medication_missed": 2
+    },
+    "assistant_summary": null,
+    "incident_summary": {
+      "fall_suspected": 1
+    },
+    "latest_event_type": "medication_confirmed",
+    "latest_location": null,
+    "latest_timestamp": "2026-03-09T12:50:42.429393",
+    "open_alerts": 2,
+    "patient_id": 2,
+    "patient_name": "Eleanor Rigby",
+    "risk_score": 31.49
+  },
+  "status": 200
+}
+
+=== relative event view ===
+{
+  "body": [
+    {
+      "category": "incidents",
+      "description": "A possible fall was detected by motion anomaly rules.",
+      "event_type": "fall_suspected",
+      "evidence": {
+        "sensor": "uwb-anchor-1"
+      },
+      "id": 83,
+      "patient_id": 2,
+      "risk_score_after": 61.0,
+      "severity": "critical",
+      "timestamp": "2026-03-08T22:31:42.429393"
+    }
+  ],
+  "status": 200
+}
+
+=== relative alert view filtered by consent ===
+{
+  "body": [
+    {
+      "created_at": "2026-03-09T19:07:42.480600",
+      "evidence_event_ids": [
+        83
+      ],
+      "id": 5,
+      "patient_id": 2,
+      "reason_codes": [
+        "fall_unresolved_2m"
+      ],
+      "resolution_note": null,
+      "severity": "critical",
+      "status": "open"
+    },
+    {
+      "created_at": "2026-03-09T19:07:42.478658",
+      "evidence_event_ids": [
+        98,
+        114
+      ],
+      "id": 4,
+      "patient_id": 2,
+      "reason_codes": [
+        "medication_missed_twice_24h"
+      ],
+      "resolution_note": null,
+      "severity": "warning",
+      "status": "open"
+    }
+  ],
+  "count": 2,
+  "status": 200
+}
+
+=== relative denied ack ===
+{
+  "body": {
+    "detail": "Role not allowed"
+  },
+  "status": 403
+}
+
+=== provider alert view ===
+{
+  "body": [
+    {
+      "created_at": "2026-03-09T19:07:42.480600",
+      "evidence_event_ids": [
+        83
+      ],
+      "id": 5,
+      "patient_id": 2,
+      "reason_codes": [
+        "fall_unresolved_2m"
+      ],
+      "resolution_note": null,
+      "severity": "critical",
+      "status": "open"
+    },
+    {
+      "created_at": "2026-03-09T19:07:42.478658",
+      "evidence_event_ids": [
+        98,
+        114
+      ],
+      "id": 4,
+      "patient_id": 2,
+      "reason_codes": [
+        "medication_missed_twice_24h"
+      ],
+      "resolution_note": null,
+      "severity": "warning",
+      "status": "open"
+    }
+  ],
+  "count": 2,
+  "status": 200
+}
+
+=== provider ack ===
+{
+  "body": {
+    "created_at": "2026-03-09T19:07:42.480600",
+    "evidence_event_ids": [
+      83
+    ],
+    "id": 5,
+    "patient_id": 2,
+    "reason_codes": [
+      "fall_unresolved_2m"
+    ],
+    "resolution_note": null,
+    "severity": "critical",
+    "status": "ack"
+  },
+  "status": 200
+}
+
+=== provider note ===
+{
+  "body": {
+    "alert_id": 5,
+    "author_user_id": 5,
+    "created_at": "2026-03-09T19:07:43.205718",
+    "id": 2,
+    "note": "Initial clinical review completed.",
+    "patient_id": 2
+  },
+  "status": 201
+}
+
+=== evidence pack ===
+{
+  "body": {
+    "algorithm": "sha256",
+    "content_hash": "715b46b9ed92e3f3fbe42fc5126ec39fc8b9a05ebbb0883b33e77f0857acdecf",
+    "pack": {
+      "alert": {
+        "created_at": "2026-03-09T19:07:42.480600",
+        "evidence_event_ids": [
+          83
+        ],
+        "id": 5,
+        "patient_id": 2,
+        "reason_codes": [
+          "fall_unresolved_2m"
+        ],
+        "severity": "critical",
+        "status": "ack"
+      },
+      "events": [
+        {
+          "category": "incidents",
+          "description": "A possible fall was detected by motion anomaly rules.",
+          "event_type": "fall_suspected",
+          "evidence": {
+            "sensor": "uwb-anchor-1"
+          },
+          "id": 83,
+          "patient_id": 2,
+          "risk_score_after": 61.0,
+          "severity": "critical",
+          "timestamp": "2026-03-08T22:31:42.429393"
+        }
+      ]
+    },
+    "signature": "ac5983b9991833ccc6528a022809d6197c25de40a7fd577f64cbfddc87a4361e"
+  },
+  "status": 200
+}
+
+=== verify evidence ===
+{
+  "body": {
+    "computed_hash": "715b46b9ed92e3f3fbe42fc5126ec39fc8b9a05ebbb0883b33e77f0857acdecf",
+    "computed_signature": "ac5983b9991833ccc6528a022809d6197c25de40a7fd577f64cbfddc87a4361e",
+    "provided_hash": "715b46b9ed92e3f3fbe42fc5126ec39fc8b9a05ebbb0883b33e77f0857acdecf",
+    "provided_signature": "ac5983b9991833ccc6528a022809d6197c25de40a7fd577f64cbfddc87a4361e",
+    "reason": "Integrity check passed",
+    "signature_valid": true,
+    "valid": true
+  },
+  "status": 200
+}
+
+=== provider resolve ===
+{
+  "body": {
+    "created_at": "2026-03-09T19:07:42.480600",
+    "evidence_event_ids": [
+      83
+    ],
+    "id": 5,
+    "patient_id": 2,
+    "reason_codes": [
+      "fall_unresolved_2m"
+    ],
+    "resolution_note": "Patient contacted and clinically stable.",
+    "severity": "critical",
+    "status": "resolved"
+  },
+  "status": 200
+}
+
+=== audit logs ===
+{
+  "body": [
+    {
+      "actor_role": "provider",
+      "actor_user_id": 5,
+      "decision": "allowed",
+      "endpoint": "/alerts/5/resolve",
+      "http_status": 200,
+      "id": 44,
+      "method": "POST",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:43.239330"
+    },
+    {
+      "actor_role": "provider",
+      "actor_user_id": 5,
+      "decision": "allowed",
+      "endpoint": "/alerts/5/evidence-pack",
+      "http_status": 200,
+      "id": 43,
+      "method": "GET",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:43.222630"
+    },
+    {
+      "actor_role": "provider",
+      "actor_user_id": 5,
+      "decision": "allowed",
+      "endpoint": "/patients/2/notes",
+      "http_status": 201,
+      "id": 42,
+      "method": "POST",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:43.208885"
+    },
+    {
+      "actor_role": "provider",
+      "actor_user_id": 5,
+      "decision": "allowed",
+      "endpoint": "/alerts/5/ack",
+      "http_status": 200,
+      "id": 41,
+      "method": "POST",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:43.192928"
+    },
+    {
+      "actor_role": "provider",
+      "actor_user_id": 5,
+      "decision": "allowed",
+      "endpoint": "/alerts",
+      "http_status": 200,
+      "id": 40,
+      "method": "GET",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:43.178664"
+    },
+    {
+      "actor_role": "relative",
+      "actor_user_id": 4,
+      "decision": "denied",
+      "endpoint": "/alerts/5/ack",
+      "http_status": 403,
+      "id": 39,
+      "method": "POST",
+      "patient_id": null,
+      "reason": "role_blocked",
+      "timestamp": "2026-03-09T19:07:43.128885"
+    },
+    {
+      "actor_role": "relative",
+      "actor_user_id": 4,
+      "decision": "allowed",
+      "endpoint": "/alerts",
+      "http_status": 200,
+      "id": 38,
+      "method": "GET",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:43.121738"
+    },
+    {
+      "actor_role": "relative",
+      "actor_user_id": 4,
+      "decision": "allowed",
+      "endpoint": "/patients/2/events",
+      "http_status": 200,
+      "id": 37,
+      "method": "GET",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:43.110403"
+    },
+    {
+      "actor_role": "relative",
+      "actor_user_id": 4,
+      "decision": "allowed",
+      "endpoint": "/patients/2/status",
+      "http_status": 200,
+      "id": 36,
+      "method": "GET",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:43.098942"
+    },
+    {
+      "actor_role": "admin",
+      "actor_user_id": 1,
+      "decision": "allowed",
+      "endpoint": "/alerts",
+      "http_status": 200,
+      "id": 35,
+      "method": "GET",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:43.085834"
+    },
+    {
+      "actor_role": "provider",
+      "actor_user_id": 5,
+      "decision": "allowed",
+      "endpoint": "/auth/login",
+      "http_status": 200,
+      "id": 34,
+      "method": "POST",
+      "patient_id": null,
+      "reason": "login_success",
+      "timestamp": "2026-03-09T19:07:43.061738"
+    },
+    {
+      "actor_role": "relative",
+      "actor_user_id": 4,
+      "decision": "allowed",
+      "endpoint": "/auth/login",
+      "http_status": 200,
+      "id": 33,
+      "method": "POST",
+      "patient_id": null,
+      "reason": "login_success",
+      "timestamp": "2026-03-09T19:07:42.778987"
+    },
+    {
+      "actor_role": "admin",
+      "actor_user_id": 1,
+      "decision": "allowed",
+      "endpoint": "/patients/2/simulate",
+      "http_status": 200,
+      "id": 32,
+      "method": "POST",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:42.484573"
+    },
+    {
+      "actor_role": "admin",
+      "actor_user_id": 1,
+      "decision": "allowed",
+      "endpoint": "/patients/2/consents",
+      "http_status": 200,
+      "id": 31,
+      "method": "POST",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:42.422564"
+    },
+    {
+      "actor_role": "admin",
+      "actor_user_id": 1,
+      "decision": "allowed",
+      "endpoint": "/patients/2/link-user",
+      "http_status": 201,
+      "id": 30,
+      "method": "POST",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:42.411436"
+    },
+    {
+      "actor_role": "admin",
+      "actor_user_id": 1,
+      "decision": "allowed",
+      "endpoint": "/patients/2/link-user",
+      "http_status": 201,
+      "id": 29,
+      "method": "POST",
+      "patient_id": 2,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:42.401748"
+    },
+    {
+      "actor_role": "admin",
+      "actor_user_id": 1,
+      "decision": "allowed",
+      "endpoint": "/patients",
+      "http_status": 201,
+      "id": 28,
+      "method": "POST",
+      "patient_id": null,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:42.391619"
+    },
+    {
+      "actor_role": "admin",
+      "actor_user_id": 1,
+      "decision": "allowed",
+      "endpoint": "/users",
+      "http_status": 201,
+      "id": 27,
+      "method": "POST",
+      "patient_id": null,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:42.364851"
+    },
+    {
+      "actor_role": "admin",
+      "actor_user_id": 1,
+      "decision": "allowed",
+      "endpoint": "/users",
+      "http_status": 201,
+      "id": 26,
+      "method": "POST",
+      "patient_id": null,
+      "reason": "authorized",
+      "timestamp": "2026-03-09T19:07:42.077758"
+    },
+    {
+      "actor_role": "admin",
+      "actor_user_id": 1,
+      "decision": "allowed",
+      "endpoint": "/auth/login",
+      "http_status": 200,
+      "id": 25,
+      "method": "POST",
+      "patient_id": null,
+      "reason": "login_success",
+      "timestamp": "2026-03-09T19:07:41.756082"
+    }
+  ],
+  "status": 200
+}
