@@ -1,15 +1,24 @@
 # ElderCareRobot Secure Simulation Backend
 
-Security-focused backend prototype for the ElderCareRobot simulation platform.
+> A security-focused FastAPI backend prototype for simulated elder-care workflows — with consent-aware access, auditable actions, and verifiable alert evidence.
 
-It provides:
-- JWT authentication with RBAC for `admin`, `relative`, and `provider`
-- patient-to-user linking checks
-- consent-driven data minimization at the API layer
-- deterministic event simulation with rule-based alert creation
-- append-only audit logging for authenticated requests, including denied requests
-- critical alert evidence packs with SHA-256 integrity hashing and HMAC signature
-- Docker Compose local runtime and FastAPI Swagger/OpenAPI out of the box
+![Terminal walkthrough of the ElderCareRobot secure backend](./demo.gif)
+
+**Explore the project:** [Run locally](#exact-run-steps) · [Access and consent](#what-the-api-enforces) · [Try the CLI demo](#quick-demo-via-cli) · [Verify evidence](#evidence-pack-integrity) · [Security limitations](#security-notes-and-tradeoffs)
+
+## Security at a glance
+
+| Area | Demonstrated behavior |
+| --- | --- |
+| **Identity and access** | JWT authentication, role-based permissions for admin, relative, and provider, and patient-user linking checks |
+| **Privacy by consent** | API-level redaction and visibility controls for location, interactions, adherence, and incidents |
+| **Simulation and response** | Deterministic event simulation, rule-based warnings and critical alerts |
+| **Accountability** | Append-only API audit records, including denied authenticated requests |
+| **Evidence integrity** | Critical alert evidence packs with SHA-256 hashes and HMAC verification |
+| **Local development** | Docker Compose, Python 3.11, and FastAPI Swagger/OpenAPI |
+
+> [!IMPORTANT]
+> The seeded `admin` / `Admin123!` login below is for **local demonstration only**. Do not expose this prototype publicly with development credentials or keys.
 
 ## Stack
 - Python 3.11
